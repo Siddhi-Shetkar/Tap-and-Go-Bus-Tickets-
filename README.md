@@ -1,2 +1,9 @@
 🔖 Tap and Go – Bus Ticket Booking System
-Tap and Go is a bus ticket booking system developed in C++, utilizing core data structures such as arrays, linked lists, and queues. This project simulates real-time seat booking, passenger management, and ticket availability to streamline public transportation access
+Tap and Go is a bus ticket booking system developed in C++, utilizing core data structures such as arrays, linked lists, and queues.
+🧠 Key Features:-
+✅ Seat Booking: Real-time seat availability and allocation.
+🚌 Multiple Bus Operators: Choose from different bus travel company names.
+📍 Boarding & Dropping Points: Select source and destination stops.
+👤 Passenger Management: Store and display passenger details.
+📄 Ticket Summary: View booking confirmations with seat, route, and bus info.
+🧾 Booking Confirmation: Display a detailed ticket confirmation after successful booking.
