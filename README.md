@@ -1,4 +1,4 @@
-🔖 Tap and Go – Bus Ticket Booking System is developed in C++, utilizing core data structures such as arrays, linked lists, and queues.
+🔖 Tap and Go – A bus ticket booking system implemented using data structures in C++.
 <br>
 🧠 Key Features:-
 <br>
