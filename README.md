@@ -8,6 +8,8 @@
 <br>
 📍 Boarding & Dropping Points: Select source and destination stops.
 <br>
+🚫 Gender-based Seat Restriction :  Prevents male users from booking seats directly beside female passengers.
+<br>
 👤 Passenger Management: Store and display passenger details.
 <br>
 📄 Ticket Summary: View booking confirmations with seat, route, and bus info.
