@@ -107,7 +107,7 @@ string getCityName(City city) {
 struct details{
     string name;
     long int num;
-    char g;
+    char gender;
     int age;
 };
 struct Node{
@@ -227,7 +227,20 @@ void inorder(TreeNode* root) {
 
 set<int> booked_seats; // Global set to track booked seats
 
-void Insert(int x) {
+map<int, details> seat_passenger_map;
+
+// New function to check if a male can book seat 2
+bool canBookSeat(int seatNumber, char gender) {
+    if (seatNumber == 2 && gender == 'M') {
+        auto it = seat_passenger_map.find(1);
+        if (it != seat_passenger_map.end() && it->second.gender == 'F') {
+            return false; // Seat 1 is booked by a female, so a male cannot book seat 2
+        }
+    }
+    return true;
+}
+
+void Insert(int x, const details& passenger) {
     Node* temp = new Node();
     temp->data = x;
     temp->next = NULL;
@@ -242,6 +255,7 @@ void Insert(int x) {
         temp1->next = temp;
     }
     booked_seats.insert(x); // Mark seat as booked
+    seat_passenger_map[x] = passenger;
 }
 void Print(){
     Node* temp=head;
@@ -1320,16 +1334,60 @@ int main()
     cin>>n;
     int x;
     cout<<"Enter the seat no(s) : ";
-    for(int i=0;i<n;i++){
-        cin>>x;
-        Insert(x);
-    }
+    int m;
+    cin >> m;
+    cout << endl;
     Print();
    
     //SHOWING WHICH SEATS ARE WINDOW SEATS IN THE SELECTED SEATS
     cout<<endl;
     vector<int> windowseats = {25,21,17,13,9,5,1,30,24,20,16,12,8,4};
     WindowSeats(windowseats);
+    for (int seat : windowseats) {
+            if (booked_seats.find(seat) == booked_seats.end()) {
+                cout << seat << " ";
+            }
+        }
+     for (int i = 1; i <= 20; ++i) {
+            if (find(windowseats.begin(), windowseats.end(), i) == windowseats.end() &&
+                booked_seats.find(i) == booked_seats.end()) {
+                cout << i << " ";
+            }
+        }
+    details passenger;
+        for (int i = 0; i < n; ++i) {
+            cout << "\nEnter details for passenger " << i + 1 << ":" << endl;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Name: ";
+            getline(cin, passenger.name);
+            cout << "Phone number: ";
+            cin >> passenger.num;
+            cout << "Gender (M/F): ";
+            cin >> passenger.gender;
+            passenger.gender = toupper(passenger.gender);
+            while (passenger.gender != 'M' && passenger.gender != 'F') {
+                cout << "Invalid gender. Please enter M or F: ";
+                cin >> passenger.gender;
+                passenger.gender = toupper(passenger.gender);
+            }
+
+            int seat_no;
+            bool valid_seat = false;
+            while (!valid_seat) {
+                cout << "Enter seat number: ";
+                cin >> seat_no;
+                if (seat_no < 1 || seat_no > 20) {
+                    cout << "Invalid seat number. Please choose between 1 and 20." << endl;
+                } else if (booked_seats.find(seat_no) != booked_seats.end()) {
+                    cout << "Seat " << seat_no << " is already booked. Please choose another seat." << endl;
+                } else if (!canBookSeat(seat_no, passenger.gender)) {
+                    cout << "Error: Male passengers cannot book seat 2 if seat 1 is booked by a female." << endl;
+                } else {
+                    valid_seat = true;
+                    Insert(seat_no, passenger);
+                }
+            }
+        }
     cout<<endl;
    
     //USER DETAILS
@@ -1338,7 +1396,7 @@ int main()
     struct details d1;
     cout<<"Enter your name : ";
     cin>>d1.name;
- 
+   
 
     while (true) {
         cout << "Enter your 10-digit phone number: ";
@@ -1357,7 +1415,7 @@ int main()
     }
 
     cout<<"Enter your gender : ";
-    cin>>d1.g;
+    cin>>d1.gender;
     cout<<"Enter your age : ";
     cin>>d1.age;
     cout<<endl;
